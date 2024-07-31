@@ -1,0 +1,61 @@
+{
+  "name": "tailwind-class-switcher",
+  "displayName": "tailwind-class-switcher",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.91.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "tailwind-class-switcher.helloWorld",
+        "title": "Hello World"
+      },
+      {
+        "command": "tailwind-class-switcher.getWordUnderCursor",
+        "title": "Get Word Under Cursor"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "tailwind-class-switcher.getWordUnderCursor",
+        "key": "ctrl+alt+w",
+        "mac": "cmd+alt+w",
+        "when": "editorTextFocus"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "pnpm run package",
+    "compile": "pnpm run check-types && pnpm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "pnpm run check-types && pnpm run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "pnpm run compile-tests && pnpm run compile && pnpm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.91.0",
+    "@types/mocha": "^10.0.7",
+    "@types/node": "20.x",
+    "@typescript-eslint/eslint-plugin": "^7.14.1",
+    "@typescript-eslint/parser": "^7.11.0",
+    "eslint": "^8.57.0",
+    "esbuild": "^0.21.5",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.4.5",
+    "@vscode/test-cli": "^0.0.9",
+    "@vscode/test-electron": "^2.4.0"
+  },
+  "packageManager": "pnpm@8.14.2+sha512.7a7cb246d2a0e244120609511e8b4adae24b224ac4592e7c0da5eb694891b435376191022bfbb8ef9c033240ee8a1a0193b5e0fe0b712e04e92f3a2d7170b89c"
+}
