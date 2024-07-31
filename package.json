@@ -13,19 +13,25 @@
   "contributes": {
     "commands": [
       {
-        "command": "tailwind-class-switcher.helloWorld",
+        "command": "tailwind-class-switcher.switchClassUp",
         "title": "Hello World"
       },
       {
-        "command": "tailwind-class-switcher.getWordUnderCursor",
+        "command": "tailwind-class-switcher.switchClassDown",
         "title": "Get Word Under Cursor"
       }
     ],
     "keybindings": [
       {
-        "command": "tailwind-class-switcher.getWordUnderCursor",
-        "key": "ctrl+alt+w",
-        "mac": "cmd+alt+w",
+        "command": "tailwind-class-switcher.switchClassUp",
+        "key": "ctrl+alt+up",
+        "mac": "ctrl+alt+up",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "tailwind-class-switcher.switchClassDown",
+        "key": "ctrl+alt+down",
+        "mac": "ctrl+alt+down",
         "when": "editorTextFocus"
       }
     ]
