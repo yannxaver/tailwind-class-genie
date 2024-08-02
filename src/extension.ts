@@ -1,8 +1,5 @@
 import * as vscode from "vscode";
-import {
-  classTypeLookUpTable,
-  classTypeToClassTypeOptionsMap,
-} from "./classes";
+import { findClass } from "./core";
 
 const switchClassFn = (direction: "up" | "down") => {
   const editor = vscode.window.activeTextEditor;
@@ -14,7 +11,7 @@ const switchClassFn = (direction: "up" | "down") => {
     let start = position.character;
     let end = position.character;
 
-    const delimiters = [" ", '"', "'", ","];
+    const delimiters = [" ", '"', "'", ",", ":"];
 
     while (start > 0 && !delimiters.includes(lineText[start - 1])) {
       start--;
@@ -26,37 +23,19 @@ const switchClassFn = (direction: "up" | "down") => {
 
     const fullClass = lineText.substring(start, end);
 
-    const classType = classTypeLookUpTable[fullClass];
-    if (!classType) {
-      return vscode.window.showInformationMessage(
-        `Class "${fullClass}" is not a supported class`
-      );
+    try {
+      const nextClass = findClass(fullClass, direction);
+      editor.edit((editBuilder) => {
+        editBuilder.replace(
+          new vscode.Range(position.line, start, position.line, end),
+          nextClass
+        );
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        return vscode.window.showErrorMessage(error.message);
+      }
     }
-
-    const classTypeOptions = classTypeToClassTypeOptionsMap[classType];
-    if (!classTypeOptions) {
-      return vscode.window.showInformationMessage(
-        `Internal error: classTypeOptions is undefined for classType "${classType}"`
-      );
-    }
-
-    const currentClassIndex = classTypeOptions.findIndex(
-      (option) => option === fullClass
-    );
-    let nextClassIndex = currentClassIndex + (direction === "up" ? 1 : -1);
-    if (nextClassIndex < 0) {
-      nextClassIndex = classTypeOptions.length - 1;
-    } else if (nextClassIndex >= classTypeOptions.length) {
-      nextClassIndex = 0;
-    }
-    const nextClass = classTypeOptions[nextClassIndex];
-
-    editor.edit((editBuilder) => {
-      editBuilder.replace(
-        new vscode.Range(position.line, start, position.line, end),
-        nextClass
-      );
-    });
   }
 };
 
