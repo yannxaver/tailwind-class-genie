@@ -37,6 +37,8 @@ const switchClassFn = (direction: "up" | "down") => {
       }
     }
   }
+
+  return undefined;
 };
 
 export function activate(context: vscode.ExtensionContext) {
