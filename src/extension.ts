@@ -37,7 +37,7 @@ const switchClassFn = async (direction: "up" | "down") => {
       });
 
       const extensionConfig = await vscode.workspace.getConfiguration(
-        "tailwind-class-switcher"
+        "tailwind-class-genie"
       );
 
       const autoSave = extensionConfig.get("autoSave");
@@ -66,12 +66,12 @@ const switchClassFn = async (direction: "up" | "down") => {
 
 export function activate(context: vscode.ExtensionContext) {
   const switchClassDown = vscode.commands.registerCommand(
-    "tailwind-class-switcher.switchClassDown",
+    "tailwind-class-genie.switchClassDown",
     switchClassFn.bind(null, "down")
   );
 
   const switchClassUp = vscode.commands.registerCommand(
-    "tailwind-class-switcher.switchClassUp",
+    "tailwind-class-genie.switchClassUp",
     switchClassFn.bind(null, "up")
   );
 

@@ -1,8 +1,9 @@
 {
-  "name": "tailwind-class-switcher",
-  "displayName": "tailwind-class-switcher",
-  "description": "",
+  "name": "tailwind-class-genie",
+  "displayName": "Tailwind Class Genie",
+  "description": "Find the right Tailwind CSS class easily.",
   "version": "0.0.1",
+  "icon": "media/icon.png",
   "engines": {
     "vscode": "^1.91.0"
   },
@@ -13,39 +14,51 @@
   "contributes": {
     "commands": [
       {
-        "command": "tailwind-class-switcher.switchClassUp",
+        "command": "tailwind-class-genie.switchClassUp",
         "title": "Switch Tailwind Class Up"
       },
       {
-        "command": "tailwind-class-switcher.switchClassDown",
+        "command": "tailwind-class-genie.switchClassDown",
         "title": "Switch Tailwind Class Down"
       }
     ],
     "keybindings": [
       {
-        "command": "tailwind-class-switcher.switchClassUp",
+        "command": "tailwind-class-genie.switchClassUp",
         "key": "ctrl+alt+up",
         "mac": "ctrl+alt+up",
         "when": "editorTextFocus"
       },
       {
-        "command": "tailwind-class-switcher.switchClassDown",
+        "command": "tailwind-class-genie.switchClassUp",
+        "key": "ctrl+alt+j",
+        "mac": "ctrl+alt+j",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "tailwind-class-genie.switchClassDown",
         "key": "ctrl+alt+down",
         "mac": "ctrl+alt+down",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "tailwind-class-genie.switchClassDown",
+        "key": "ctrl+alt+k",
+        "mac": "ctrl+alt+k",
         "when": "editorTextFocus"
       }
     ],
     "configuration": {
       "title": "Tailwind Class Switcher",
       "properties": {
-        "tailwind-class-switcher.autoSave": {
+        "tailwind-class-genie.autoSave": {
           "type": "boolean",
           "default": true,
           "description": "Automatically save the file after switching the class."
         },
-        "tailwind-class-switcher.autoSaveDelay": {
+        "tailwind-class-genie.autoSaveDelay": {
           "type": "number",
-          "default": 500,
+          "default": 400,
           "description": "Delay in milliseconds before saving the file after switching the class."
         }
       }
