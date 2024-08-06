@@ -45,3 +45,38 @@ export function createRegexForUnitLevels(
 
   return new RegExp(`^${base}(${escapedLevels})$`);
 }
+
+export function removeUrlsBefore(data: string[], targetUrl: string) {
+  const index = data.findIndex((url) => url === targetUrl);
+
+  if (index === -1) {
+    console.warn(`Target URL "${targetUrl}" not found in the array.`);
+    return data;
+  }
+
+  return data.slice(index);
+}
+
+export function removeUrlsAfter(data: string[], targetUrl: string) {
+  const index = data.findIndex((url) => url === targetUrl);
+
+  if (index === -1) {
+    console.warn(`Target URL "${targetUrl}" not found in the array.`);
+    return data;
+  }
+
+  return data.slice(0, index + 1);
+}
+
+export function removeUrl(data: string[], targetUrl: string) {
+  const index = data.findIndex((url) => url === targetUrl);
+
+  if (index === -1) {
+    console.warn(`Target URL "${targetUrl}" not found in the array.`);
+    return data;
+  }
+
+  data.splice(index, 1);
+
+  return data;
+}

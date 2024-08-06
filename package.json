@@ -48,7 +48,9 @@
     "pretest": "pnpm run compile-tests && pnpm run compile && pnpm run lint",
     "check-types": "tsc --noEmit",
     "lint": "eslint src --ext ts",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "scrape-categories": "npx playwright test scraping/categories.spec.ts",
+    "scrape-classes": "npx playwright test scraping/classes.spec.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.45.3",

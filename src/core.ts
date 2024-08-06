@@ -1,9 +1,9 @@
+import customClasses from "../scraping/classes.json";
 import {
   colorLevels,
   customClassesLookUpTable,
   distanceLevels,
 } from "./classes";
-import customClasses from "./classes/classes.json";
 import {
   createRegexForUnitLevels,
   getAfterLastDash,
@@ -12,11 +12,11 @@ import {
 } from "./utils";
 
 export const colorClassRegex = createRegexForUnitLevels(
-  "[a-z]+-[a-z]+-",
+  "(\\w+-)*",
   colorLevels
 );
 export const distanceClassRegex = createRegexForUnitLevels(
-  "(\\w+-)*\\w+-",
+  "(\\w+-)*",
   distanceLevels
 );
 
@@ -51,7 +51,7 @@ const findNextClassForColorClassesStrategy = (
   direction: "up" | "down"
 ): string => {
   const currentColorLevelIndex = colorLevels.findIndex(
-    (value) => value === currentClass.split("-")[2]
+    (value) => value === currentClass.split("-").pop()
   );
 
   const nextColorLevel = getNextValueFromArray(

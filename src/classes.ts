@@ -1,4 +1,4 @@
-import customClasses from "./classes/classes.json";
+import customClasses from "../scraping/classes.json";
 
 export const customClassesLookUpTable: {
   [key in string]: string;
