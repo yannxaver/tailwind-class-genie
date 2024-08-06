@@ -1,9 +1,7 @@
 # Tailwind Class Genie
 
-> Tired of manually writing Tailwind classes to find the one that fits?
-
-> Can't remember if `font-base` or `font-normal` comes after `font-light`?
-
+> Tired of manually writing Tailwind classes to find the one that fits? \
+> Can't remember if `font-base` or `font-normal` comes after `font-light`? \
 > What was the next spacing level after `mr-24` again?
 
 This extension enables you to forget about the class names and focus on the visual outcome instead.

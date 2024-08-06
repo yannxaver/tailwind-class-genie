@@ -1,7 +1,7 @@
 {
   "name": "tailwind-class-genie",
   "displayName": "Tailwind Class Genie",
-  "description": "Find the right Tailwind CSS class easily.",
+  "description": "Find the right Tailwind class easily.",
   "version": "0.0.1",
   "icon": "media/icon.png",
   "engines": {
