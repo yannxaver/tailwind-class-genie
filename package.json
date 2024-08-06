@@ -34,7 +34,22 @@
         "mac": "ctrl+alt+down",
         "when": "editorTextFocus"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Tailwind Class Switcher",
+      "properties": {
+        "tailwind-class-switcher.autoSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically save the file after switching the class."
+        },
+        "tailwind-class-switcher.autoSaveDelay": {
+          "type": "number",
+          "default": 500,
+          "description": "Delay in milliseconds before saving the file after switching the class."
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "pnpm run package",

@@ -1,7 +1,9 @@
 import * as vscode from "vscode";
 import { findClass } from "./core";
 
-const switchClassFn = (direction: "up" | "down") => {
+let saveTimer: Timer;
+
+const switchClassFn = async (direction: "up" | "down") => {
   const editor = vscode.window.activeTextEditor;
 
   if (editor) {
@@ -26,12 +28,32 @@ const switchClassFn = (direction: "up" | "down") => {
 
     try {
       const nextClass = findClass(fullClass, direction);
+
       editor.edit((editBuilder) => {
         editBuilder.replace(
           new vscode.Range(position.line, start, position.line, end),
           nextClass
         );
       });
+
+      const extensionConfig = await vscode.workspace.getConfiguration(
+        "tailwind-class-switcher"
+      );
+
+      const autoSave = extensionConfig.get("autoSave");
+      const autoSaveDelay = extensionConfig.get("autoSaveDelay");
+
+      if (autoSave) {
+        if (autoSaveDelay && typeof autoSaveDelay === "number") {
+          clearTimeout(saveTimer);
+
+          saveTimer = setTimeout(async () => {
+            await editor.document.save();
+          }, autoSaveDelay);
+        } else {
+          await editor.document.save();
+        }
+      }
     } catch (error) {
       if (error instanceof Error) {
         return vscode.window.showErrorMessage(error.message);
