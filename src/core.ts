@@ -11,14 +11,8 @@ import {
   replaceAfterLastDash,
 } from "./utils";
 
-export const colorClassRegex = createRegexForUnitLevels(
-  "(\\w+-)*",
-  colorLevels
-);
-export const distanceClassRegex = createRegexForUnitLevels(
-  "(\\w+-)*",
-  distanceLevels
-);
+const colorClassRegex = createRegexForUnitLevels("(\\w+-)*", colorLevels);
+const distanceClassRegex = createRegexForUnitLevels("(\\w+-)*", distanceLevels);
 
 export const findClass = (
   currentClass: string,

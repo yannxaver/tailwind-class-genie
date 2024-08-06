@@ -162,9 +162,6 @@ deleteKeys(fullConfig.theme, [...colorClasses, ...spaceClasses]);
 const transformed = transformObject(fullConfig.theme);
 // logDeep(transformObject(transformed));
 
-const allClasses = Object.keys(transformed).flatMap((key) => transformed[key]);
-// logDeep(allClasses.filter((value) => distanceClassRegex.test(value)));
-
 writeFileSync(
   `${__dirname}/classes.json`,
   JSON.stringify(transformed, null, 2)

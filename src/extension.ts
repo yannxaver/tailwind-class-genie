@@ -3,6 +3,7 @@ import { findClass } from "./core";
 
 const switchClassFn = (direction: "up" | "down") => {
   const editor = vscode.window.activeTextEditor;
+
   if (editor) {
     const position = editor.selection.active;
     const line = editor.document.lineAt(position.line);
