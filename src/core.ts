@@ -1,9 +1,9 @@
-import customClasses from "../scraping/classes.json";
 import {
   colorLevels,
   customClassesLookUpTable,
   distanceLevels,
-} from "./classes";
+} from "./classes/classes";
+import customClasses from "./classes/classes.json";
 import {
   createRegexForUnitLevels,
   getAfterLastDash,
@@ -80,8 +80,9 @@ const findNextClassForCustomClassesStrategy = (
   currentClass: string,
   direction: "up" | "down"
 ): string => {
-  // @ts-expect-error
-  const classTypeOptions = customClasses[classType] as string[];
+  const classTypeOptions = customClasses[
+    classType as keyof typeof customClasses
+  ] as string[];
 
   const currentClassIndex = classTypeOptions.findIndex(
     (option) => option === currentClass

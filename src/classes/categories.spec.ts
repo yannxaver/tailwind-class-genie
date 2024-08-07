@@ -4,7 +4,7 @@ import {
   removeElement,
   removeElementsAfter,
   removeElementsBefore,
-} from "../src/utils";
+} from "../utils";
 
 test(`Getting category classes`, async ({ page }) => {
   await page.goto(`https://tailwindcss.com/docs/`);

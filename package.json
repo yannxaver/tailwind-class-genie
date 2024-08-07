@@ -4,6 +4,7 @@
   "description": "Find the right Tailwind class easily.",
   "version": "0.0.1",
   "icon": "media/icon.png",
+  "publisher": "yannxaver",
   "engines": {
     "vscode": "^1.91.0"
   },
@@ -11,6 +12,23 @@
     "Other"
   ],
   "main": "./dist/extension.js",
+  "scripts": {
+    "vscode:prepublish": "pnpm run package",
+    "compile": "pnpm run check-types && pnpm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "pnpm run check-types && pnpm run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "pnpm run compile-tests && pnpm run compile && pnpm run lint",
+    "check-types": "tsc --noEmit",
+    "tsc": "tsc --noEmit --watch",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test",
+    "scrape-categories": "npx playwright test scraping/categories.spec.ts",
+    "scrape-classes": "npx playwright test scraping/classes.spec.ts"
+  },
   "contributes": {
     "commands": [
       {
@@ -63,22 +81,6 @@
         }
       }
     }
-  },
-  "scripts": {
-    "vscode:prepublish": "pnpm run package",
-    "compile": "pnpm run check-types && pnpm run lint && node esbuild.js",
-    "watch": "npm-run-all -p watch:*",
-    "watch:esbuild": "node esbuild.js --watch",
-    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
-    "package": "pnpm run check-types && pnpm run lint && node esbuild.js --production",
-    "compile-tests": "tsc -p . --outDir out",
-    "watch-tests": "tsc -p . -w --outDir out",
-    "pretest": "pnpm run compile-tests && pnpm run compile && pnpm run lint",
-    "check-types": "tsc --noEmit",
-    "lint": "eslint src --ext ts",
-    "test": "vscode-test",
-    "scrape-categories": "npx playwright test scraping/categories.spec.ts",
-    "scrape-classes": "npx playwright test scraping/classes.spec.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.45.3",
