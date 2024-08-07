@@ -37,7 +37,8 @@ export const findClass = (
     return findNextClassForDistanceClassesStrategy(currentClass, direction);
   }
 
-  throw new Error(`"${currentClass}" is not a supported class`);
+  throw new Error(`"${currentClass}" is not a supported class.
+    Do you think that is a mistake? Please open an issue at: https://github.com/yannxaver/tailwind-class-genie/issues`);
 };
 
 const findNextClassForColorClassesStrategy = (
