@@ -10,7 +10,7 @@
     "url": "https://github.com/yannxaver/tailwind-class-genie"
   },
   "engines": {
-    "vscode": "^1.92.0"
+    "vscode": "^1.80.0"
   },
   "categories": [
     "Other"
@@ -92,7 +92,7 @@
     "@playwright/test": "^1.46.0",
     "@types/mocha": "^10.0.7",
     "@types/node": "~20.14.14",
-    "@types/vscode": "^1.92.0",
+    "@types/vscode": "1.80.0",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
     "@vscode/test-cli": "^0.0.9",
