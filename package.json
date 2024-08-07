@@ -5,6 +5,10 @@
   "version": "0.0.1",
   "icon": "media/icon.png",
   "publisher": "yannxaver",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yannxaver/tailwind-class-genie"
+  },
   "engines": {
     "vscode": "^1.92.0"
   },
