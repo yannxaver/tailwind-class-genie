@@ -2,7 +2,7 @@
   "name": "tailwind-class-genie",
   "displayName": "Tailwind Class Genie",
   "description": "Find the right Tailwind class easily.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "icon": "media/logo.png",
   "publisher": "yannxaver",
   "repository": {
