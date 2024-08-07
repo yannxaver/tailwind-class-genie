@@ -3,7 +3,7 @@
   "displayName": "Tailwind Class Genie",
   "description": "Find the right Tailwind class easily.",
   "version": "0.0.1",
-  "icon": "media/icon.png",
+  "icon": "media/logo.png",
   "publisher": "yannxaver",
   "repository": {
     "type": "git",
