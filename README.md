@@ -6,9 +6,9 @@
 
 This extension enables you to forget about class names and focus on the visual outcome instead.
 
-## Key Bindings
+![Example](https://pub-8dde1258b011475ab41024837b4c299a.r2.dev/tailwind-class-genie/example.gif)
 
-### MacOS
+## Key Bindings
 
 `CTRL(^) + ALT(⌥) + ARROW UP or J`: \
 Go one class up.
