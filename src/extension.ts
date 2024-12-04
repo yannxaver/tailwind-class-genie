@@ -14,7 +14,7 @@ const switchClassFn = async (direction: "up" | "down") => {
     let start = position.character;
     let end = position.character;
 
-    const delimiters = [" ", '"', "'", ",", ":"];
+    const delimiters = [" ", '"', "'", ",", ":", ";"];
 
     while (start > 0 && !delimiters.includes(lineText[start - 1])) {
       start--;
