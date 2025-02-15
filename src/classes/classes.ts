@@ -1,7 +1,5 @@
 import customClasses from "./classes.json";
 
-console.log(customClasses);
-
 export const customClassesLookUpTable: {
   [key in string]: string;
 } = Object.entries(customClasses).reduce((acc, [classType, options]) => {
