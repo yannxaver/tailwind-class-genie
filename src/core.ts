@@ -18,27 +18,51 @@ export const findClass = (
   currentClass: string,
   direction: "up" | "down"
 ): string => {
-  const isCustomClass = customClassesLookUpTable[currentClass];
+  let classToSwitch = currentClass;
+  const isNegativeClass = currentClass.startsWith("-");
+  if (isNegativeClass) {
+    classToSwitch = classToSwitch.slice(1);
+  }
+
+  let classToReturn;
+
+  const isCustomClass = customClassesLookUpTable[classToSwitch];
   if (isCustomClass) {
-    return findNextClassForCustomClassesStrategy(
+    classToReturn = findNextClassForCustomClassesStrategy(
       isCustomClass,
-      currentClass,
+      classToSwitch,
       direction
     );
   }
 
-  const isColorClass = colorClassRegex.test(currentClass);
+  const isColorClass = colorClassRegex.test(classToSwitch);
   if (isColorClass) {
-    return findNextClassForColorClassesStrategy(currentClass, direction);
+    classToReturn = findNextClassForColorClassesStrategy(
+      classToSwitch,
+      direction
+    );
   }
 
-  const isDistanceClass = distanceClassRegex.test(currentClass);
+  const isDistanceClass = distanceClassRegex.test(classToSwitch);
   if (isDistanceClass) {
-    return findNextClassForDistanceClassesStrategy(currentClass, direction);
+    classToReturn = findNextClassForDistanceClassesStrategy(
+      classToSwitch,
+      direction
+    );
   }
 
-  throw new Error(`"${currentClass}" is not a supported class.
-    Do you think that is a mistake? Please open an issue at: https://github.com/yannxaver/tailwind-class-genie/issues`);
+  if (!classToReturn) {
+    throw new Error(
+      `"${classToSwitch}" is not a supported class.
+    Do you think this is a mistake? Please open an issue at: https://github.com/yannxaver/tailwind-class-genie/issues`
+    );
+  }
+
+  if (isNegativeClass) {
+    return `-${classToReturn}`;
+  }
+
+  return classToReturn;
 };
 
 const findNextClassForColorClassesStrategy = (
