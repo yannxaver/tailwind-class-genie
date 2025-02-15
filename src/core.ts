@@ -59,7 +59,7 @@ export const findClass = (
   }
 
   if (isNegativeClass) {
-    return `-${classToReturn}`;
+    classToReturn = `-${classToReturn}`;
   }
 
   return classToReturn;

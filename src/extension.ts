@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import { findClass } from "./core";
 
 let saveTimer: Timer;
+let outputChannel: vscode.OutputChannel;
 
 const switchClassFn = async (direction: "up" | "down") => {
   const editor = vscode.window.activeTextEditor;
@@ -25,9 +26,14 @@ const switchClassFn = async (direction: "up" | "down") => {
     }
 
     const fullClass = lineText.substring(start, end);
-
     try {
+      outputChannel.appendLine(
+        `Attempting to switch class: ${fullClass} in direction: ${direction}`
+      );
+
       const nextClass = findClass(fullClass, direction);
+
+      outputChannel.appendLine(`Next class: ${nextClass}`);
 
       editor.edit((editBuilder) => {
         editBuilder.replace(
@@ -56,6 +62,7 @@ const switchClassFn = async (direction: "up" | "down") => {
       }
     } catch (error) {
       if (error instanceof Error) {
+        outputChannel.appendLine(`Error: ${error.message}`);
         return vscode.window.showErrorMessage(error.message);
       }
     }
@@ -65,6 +72,10 @@ const switchClassFn = async (direction: "up" | "down") => {
 };
 
 export function activate(context: vscode.ExtensionContext) {
+  outputChannel = vscode.window.createOutputChannel("Tailwind Class Genie");
+  outputChannel.appendLine("Tailwind Class Genie activated");
+  outputChannel.show();
+
   const switchClassDown = vscode.commands.registerCommand(
     "tailwind-class-genie.switchClassDown",
     switchClassFn.bind(null, "down")
@@ -75,7 +86,7 @@ export function activate(context: vscode.ExtensionContext) {
     switchClassFn.bind(null, "up")
   );
 
-  context.subscriptions.push(switchClassDown, switchClassUp);
+  context.subscriptions.push(switchClassDown, switchClassUp, outputChannel);
 }
 
 export function deactivate() {}
