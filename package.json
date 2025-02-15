@@ -18,14 +18,14 @@
   "main": "./dist/extension.js",
   "scripts": {
     "dev": "node esbuild.js --watch",
+    "scrape-categories": "npx playwright test scraping/categories.spec.ts",
+    "scrape-classes": "npx playwright test scraping/classes.spec.ts",
     "check-types": "tsc --noEmit --watch",
     "lint": "eslint src --ext ts",
-    "publish-patch": "vsce publish patch --no-dependencies",
-    "publish-minor": "vsce publish minor --no-dependencies",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "scrape-categories": "npx playwright test scraping/categories.spec.ts",
-    "scrape-classes": "npx playwright test scraping/classes.spec.ts"
+    "publish-patch": "vsce publish patch --no-dependencies",
+    "publish-minor": "vsce publish minor --no-dependencies"
   },
   "contributes": {
     "commands": [
