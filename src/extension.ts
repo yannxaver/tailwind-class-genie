@@ -74,7 +74,6 @@ const switchClassFn = async (direction: "up" | "down") => {
 export function activate(context: vscode.ExtensionContext) {
   outputChannel = vscode.window.createOutputChannel("Tailwind Class Genie");
   outputChannel.appendLine("Tailwind Class Genie activated");
-  outputChannel.show();
 
   const switchClassDown = vscode.commands.registerCommand(
     "tailwind-class-genie.switchClassDown",
