@@ -1,6 +1,6 @@
 # Tailwind Class Genie
 
-> Tired of manually changing Tailwind classes to find the right one? \
+> Tired of manually typing out Tailwind classes until you find the right one? \
 > Can't remember if `font-base` or `font-normal` comes after `font-light`? \
 > What was the next spacing level after `mr-24` again?
 
