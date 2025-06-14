@@ -64,7 +64,7 @@ const switchClassFn = async (direction: "up" | "down") => {
       if (error instanceof Error) {
         outputChannel.appendLine(`Error: ${error.message}`);
         vscode.window.showErrorMessage(error.message);
-        return undefined
+        return undefined;
       }
     }
   }
