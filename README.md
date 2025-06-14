@@ -61,5 +61,10 @@ Auto-save is enabled by default with a delay of 400 milliseconds. Change to your
     "type": "number",
     "default": 400,
     "description": "Delay in milliseconds before saving the file after switching the class."
+},
+"tailwind-class-genie.silent": {
+  "type": "boolean",
+  "default": false,
+  "description": "Whether to suppress error pop-up messages"
 }
 ```
