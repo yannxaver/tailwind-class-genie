@@ -63,7 +63,15 @@ const switchClassFn = async (direction: "up" | "down") => {
     } catch (error) {
       if (error instanceof Error) {
         outputChannel.appendLine(`Error: ${error.message}`);
-        vscode.window.showErrorMessage(error.message);
+
+        const extensionConfig = await vscode.workspace.getConfiguration(
+          "tailwind-class-genie"
+        );
+        const isSilent = extensionConfig.get<boolean>("silent");
+        if(!isSilent) {
+          vscode.window.showErrorMessage(error.message);
+        }
+         
         return undefined;
       }
     }
