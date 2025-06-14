@@ -1,9 +1,10 @@
 import * as vscode from "vscode";
 import { findClass } from "./core";
 import { getConfigs } from "./config";
+import { Logger } from "./logger";
 
 let saveTimer: Timer;
-let outputChannel: vscode.OutputChannel;
+const logger = new Logger("Tailwind Class Genie");
 
 const switchClassFn = async (direction: "up" | "down") => {
   const editor = vscode.window.activeTextEditor;
@@ -28,13 +29,11 @@ const switchClassFn = async (direction: "up" | "down") => {
 
     const fullClass = lineText.substring(start, end);
     try {
-      outputChannel.appendLine(
-        `Attempting to switch class: ${fullClass} in direction: ${direction}`
-      );
+      logger.log(`Attempting to switch class: ${fullClass} in direction: ${direction}`);
 
       const nextClass = findClass(fullClass, direction);
 
-      outputChannel.appendLine(`Next class: ${nextClass}`);
+      logger.log( `Next class: ${nextClass}`);
 
       editor.edit((editBuilder) => {
         editBuilder.replace(
@@ -46,7 +45,7 @@ const switchClassFn = async (direction: "up" | "down") => {
       trySave(editor);
     } catch (error) {
       if (error instanceof Error) {
-        showErrorMessage(error);
+        logger.error(error.message);
         return undefined;
       }
     }
@@ -74,21 +73,8 @@ async function trySave(editor: vscode.TextEditor): Promise<void> {
   }
 }
 
-function showErrorMessage(error: Error): void {
-  const configs = getConfigs();
-
-  const isSilent = configs.get<boolean>("silent");
-
-  outputChannel.appendLine(`Error: ${error.message}`);
-
-  if(!isSilent) {
-    vscode.window.showErrorMessage(error.message);
-  }
-}
-
 export function activate(context: vscode.ExtensionContext) {
-  outputChannel = vscode.window.createOutputChannel("Tailwind Class Genie");
-  outputChannel.appendLine("Tailwind Class Genie activated");
+  logger.log("Tailwind Class Genie activated");
 
   const switchClassDown = vscode.commands.registerCommand(
     "tailwind-class-genie.switchClassDown",
@@ -100,7 +86,7 @@ export function activate(context: vscode.ExtensionContext) {
     switchClassFn.bind(null, "up")
   );
 
-  context.subscriptions.push(switchClassDown, switchClassUp, outputChannel);
+  context.subscriptions.push(switchClassDown, switchClassUp, logger.outputChannel);
 }
 
 export function deactivate() {}
