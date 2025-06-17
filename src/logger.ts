@@ -14,12 +14,11 @@ export class Logger {
 
   error(...args: string[]) {
     const config = getExtensionConfiguration();
-    const isSilent = config.get<boolean>("silent");
 
     const errMsg = `[ERROR] ${args.join(",")}`;
-
     this.outputChannel.appendLine(errMsg);
 
+    const isSilent = config.get<boolean>("silent");
     if (!isSilent) {
       vscode.window.showErrorMessage(errMsg);
     }
