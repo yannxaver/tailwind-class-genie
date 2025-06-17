@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
+import { getExtensionConfiguration } from "./config";
 import { findClass } from "./core";
-import { getConfigs } from "./config";
 import { Logger } from "./logger";
 
 let saveTimer: Timer;
@@ -29,11 +29,13 @@ const switchClassFn = async (direction: "up" | "down") => {
 
     const fullClass = lineText.substring(start, end);
     try {
-      logger.log(`Attempting to switch class: ${fullClass} in direction: ${direction}`);
+      logger.log(
+        `Attempting to switch class: ${fullClass} in direction: ${direction}`
+      );
 
       const nextClass = findClass(fullClass, direction);
 
-      logger.log( `Next class: ${nextClass}`);
+      logger.log(`Next class: ${nextClass}`);
 
       editor.edit((editBuilder) => {
         editBuilder.replace(
@@ -55,10 +57,10 @@ const switchClassFn = async (direction: "up" | "down") => {
 };
 
 async function trySave(editor: vscode.TextEditor): Promise<void> {
-  const configs = getConfigs();
+  const config = getExtensionConfiguration();
 
-  const autoSave = configs.get("autoSave");
-  const autoSaveDelay = configs.get("autoSaveDelay");
+  const autoSave = config.get("autoSave");
+  const autoSaveDelay = config.get("autoSaveDelay");
 
   if (autoSave) {
     if (autoSaveDelay && typeof autoSaveDelay === "number") {
@@ -86,7 +88,11 @@ export function activate(context: vscode.ExtensionContext) {
     switchClassFn.bind(null, "up")
   );
 
-  context.subscriptions.push(switchClassDown, switchClassUp, logger.outputChannel);
+  context.subscriptions.push(
+    switchClassDown,
+    switchClassUp,
+    logger.outputChannel
+  );
 }
 
 export function deactivate() {}
