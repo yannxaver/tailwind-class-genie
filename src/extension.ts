@@ -1,8 +1,10 @@
 import * as vscode from "vscode";
+import { getExtensionConfiguration } from "./config";
 import { findClass } from "./core";
+import { Logger } from "./logger";
 
 let saveTimer: Timer;
-let outputChannel: vscode.OutputChannel;
+const logger = new Logger("Tailwind Class Genie");
 
 const switchClassFn = async (direction: "up" | "down") => {
   const editor = vscode.window.activeTextEditor;
@@ -27,13 +29,13 @@ const switchClassFn = async (direction: "up" | "down") => {
 
     const fullClass = lineText.substring(start, end);
     try {
-      outputChannel.appendLine(
+      logger.log(
         `Attempting to switch class: ${fullClass} in direction: ${direction}`
       );
 
       const nextClass = findClass(fullClass, direction);
 
-      outputChannel.appendLine(`Next class: ${nextClass}`);
+      logger.log(`Next class: ${nextClass}`);
 
       editor.edit((editBuilder) => {
         editBuilder.replace(
@@ -42,28 +44,10 @@ const switchClassFn = async (direction: "up" | "down") => {
         );
       });
 
-      const extensionConfig = await vscode.workspace.getConfiguration(
-        "tailwind-class-genie"
-      );
-
-      const autoSave = extensionConfig.get("autoSave");
-      const autoSaveDelay = extensionConfig.get("autoSaveDelay");
-
-      if (autoSave) {
-        if (autoSaveDelay && typeof autoSaveDelay === "number") {
-          clearTimeout(saveTimer);
-
-          saveTimer = setTimeout(async () => {
-            await editor.document.save();
-          }, autoSaveDelay);
-        } else {
-          await editor.document.save();
-        }
-      }
+      trySave(editor);
     } catch (error) {
       if (error instanceof Error) {
-        outputChannel.appendLine(`Error: ${error.message}`);
-        vscode.window.showErrorMessage(error.message);
+        logger.error(error.message);
         return undefined;
       }
     }
@@ -72,9 +56,27 @@ const switchClassFn = async (direction: "up" | "down") => {
   return undefined;
 };
 
+async function trySave(editor: vscode.TextEditor): Promise<void> {
+  const config = getExtensionConfiguration();
+
+  const autoSave = config.get("autoSave");
+  const autoSaveDelay = config.get("autoSaveDelay");
+
+  if (autoSave) {
+    if (autoSaveDelay && typeof autoSaveDelay === "number") {
+      clearTimeout(saveTimer);
+
+      saveTimer = setTimeout(async () => {
+        await editor.document.save();
+      }, autoSaveDelay);
+    } else {
+      await editor.document.save();
+    }
+  }
+}
+
 export function activate(context: vscode.ExtensionContext) {
-  outputChannel = vscode.window.createOutputChannel("Tailwind Class Genie");
-  outputChannel.appendLine("Tailwind Class Genie activated");
+  logger.log("Tailwind Class Genie activated");
 
   const switchClassDown = vscode.commands.registerCommand(
     "tailwind-class-genie.switchClassDown",
@@ -86,7 +88,11 @@ export function activate(context: vscode.ExtensionContext) {
     switchClassFn.bind(null, "up")
   );
 
-  context.subscriptions.push(switchClassDown, switchClassUp, outputChannel);
+  context.subscriptions.push(
+    switchClassDown,
+    switchClassUp,
+    logger.outputChannel
+  );
 }
 
 export function deactivate() {}
