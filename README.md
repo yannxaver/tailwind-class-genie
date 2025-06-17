@@ -65,6 +65,6 @@ Auto-save is enabled by default with a delay of 400 milliseconds. Change to your
 "tailwind-class-genie.silent": {
   "type": "boolean",
   "default": false,
-  "description": "Whether to suppress error pop-up messages"
+  "description": "Suppresses the error pop-up messages."
 }
 ```
